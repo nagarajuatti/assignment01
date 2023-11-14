@@ -1,70 +1,77 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
+interface UserData {
+  id: number;
+  fn: string;
+  mn: string;
+  ln: string;
+  email: string;
+  phone: string;
+  Role: string;
+  place: string;
+}
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.css']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent {
 
-  usersData:any []=[]
-  enableRefresh:boolean=false
-  showTable!: true;
+  usersData: UserData[] = [];
+  enableRefresh: boolean = false;
+  showTable: boolean = false;
 
-  users = [
-  { 
-  "id": 0,
-  "fn": "Atti" , 
-  "mn": "Naga", 
-  "ln": "Raju", 
-  "email": "attinagaraju100@gmail.com", 
-  "phone":"8978989551", 
-  "Role": "Admin", 
-  "place":"Anantapur"},
+  users: UserData[] = [
+    {"id": 0,
+    "fn": "Atti" , 
+    "mn": "Naga", 
+    "ln": "Raju", 
+    "email": "attinaga@gmail.com", 
+    "phone":"8978989551", 
+    "Role": "Admin", 
+    "place":"Anantapur"},
+   {
+    "id": 1,
+    "fn": "Atti" , 
+    "mn": "Pragna", 
+    "ln": "Priya", 
+    "email": "pragna@gmail.com", 
+    "phone":"8978989551", 
+    "Role": "Guest", 
+    "place":"ATP"
+   },
+   {
+    "id": 2,
+    "fn": "Atti" , 
+    "mn": "Dussu", 
+    "ln": "Chakri", 
+    "email": "chakri@gmail.com", 
+    "phone":"8978989551", 
+    "Role": "User", 
+    "place":"KLD"
+   }
+  ];
+  originalData: UserData[] = [];
 
-  { 
-  "id": 1,
-  "fn": "atti" , 
-  "mn": "dushyanth", 
-  "ln": "chaktravarthy", 
-  "email": "attinagjaraju897@gmail.com", 
-  "phone":"89789894551", 
-  "Role": "Guest", 
-  "place":"Bangalore"},
-
-  { 
-  "id": 2,
-  "fn": "atti" , 
-  "mn": "Pragna", 
-  "ln": "Priya", 
-  "email": "attinagjaraju8088@gmail.com", 
-  "phone":"89789894551", 
-  "Role": "User", 
-  "place":"Hyd"}]; 
-option: any;
-
-
-  constructor(){}
-  
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-  
   isEditEnabled: boolean[] = [];
 
+  constructor() {}
   loadData(): void {
-    this.usersData=this.users
-    this.enableRefresh=true
-    this.showTable=true
+    this.usersData = this.users.map(user => ({ ...user }));
+    this.enableRefresh = true;
+    this.showTable = true;
     this.isEditEnabled = new Array(this.users.length).fill(false);
+    this.originalData = this.users.map(user => ({ ...user }));
   }
-
   editUser(index: number): void {
     this.isEditEnabled[index] = true;
   }
 
   deleteUser(index: number): void {
     this.users.splice(index, 1);
+    this.usersData.splice(index, 1);
+    this.originalData.splice(index, 1);
+    this.isEditEnabled.splice(index, 1);
   }
 
   saveUser(index: number): void {
@@ -73,7 +80,6 @@ option: any;
 
   cancelEdit(index: number): void {
     this.isEditEnabled[index] = false;
-  }
+    this.usersData[index] = { ...this.originalData[index] };
 }
-
-
+}
