@@ -41,6 +41,7 @@ export class UsersComponent implements OnInit {
   "phone":"89789894551", 
   "Role": "User", 
   "place":"Hyd"}]; 
+option: any;
 
 
   constructor(){}
