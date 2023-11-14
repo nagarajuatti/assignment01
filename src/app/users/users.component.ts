@@ -20,9 +20,10 @@ export class UsersComponent {
   usersData: UserData[] = [];
   enableRefresh: boolean = false;
   showTable: boolean = false;
-
+  
   users: UserData[] = [
-    {"id": 0,
+    {
+    "id": 0,
     "fn": "Atti" , 
     "mn": "Naga", 
     "ln": "Raju", 
@@ -51,7 +52,9 @@ export class UsersComponent {
     "place":"KLD"
    }
   ];
+
   originalData: UserData[] = [];
+  lastUpdatedData: UserData[] = [];
 
   isEditEnabled: boolean[] = [];
 
@@ -62,6 +65,7 @@ export class UsersComponent {
     this.showTable = true;
     this.isEditEnabled = new Array(this.users.length).fill(false);
     this.originalData = this.users.map(user => ({ ...user }));
+    this.lastUpdatedData = this.users.map(user => ({ ...user })); 
   }
   editUser(index: number): void {
     this.isEditEnabled[index] = true;
@@ -76,10 +80,11 @@ export class UsersComponent {
 
   saveUser(index: number): void {
     this.isEditEnabled[index] = false;
+    this.lastUpdatedData[index] = { ...this.usersData[index] };
   }
 
   cancelEdit(index: number): void {
     this.isEditEnabled[index] = false;
-    this.usersData[index] = { ...this.originalData[index] };
-}
+    this.usersData[index] = { ...this.lastUpdatedData[index] };
+  }
 }
