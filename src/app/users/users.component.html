@@ -1,6 +1,6 @@
 <div class="load-button-container">
 <button *ngIf="!enableRefresh" data-action="load" (click)="loadData()">Load Data</button>
-<button *ngIf="enableRefresh" data-action="refresh">Refresh Data</button>
+<button *ngIf="enableRefresh" data-action="refresh" (click)="loadData()">Refresh Data</button>
 </div>
 <table *ngIf="showTable">
   <thead>
